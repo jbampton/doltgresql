@@ -2050,3 +2050,18 @@ func TestUnknownFunctions(t *testing.T) {
 		},
 	})
 }
+
+func TestSelectFromFunctions(t *testing.T) {
+	RunScripts(t, []ScriptTest{
+		{
+			Name:        "select * FROM functions",
+			SetUpScript: []string{},
+			Assertions: []ScriptTestAssertion{
+				{
+					Query:    `SELECT * FROM format_type('text'::regtype, 4);`,
+					Expected: []sql.Row{{"text(4)"}},
+				},
+			},
+		},
+	})
+}
