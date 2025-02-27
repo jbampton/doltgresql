@@ -175,7 +175,8 @@ type DoltgresConfig struct {
 	Jwks            []servercfg.JwksConfig    `yaml:"jwks,omitempty" minver:"0.7.4"`
 	GoldenMysqlConn *string                   `yaml:"golden_mysql_conn,omitempty" minver:"0.7.4"`
 
-	PostgresReplicationConfig *PostgresReplicationConfig `yaml:"postgres_replication,omitempty" minver:"0.7.4"`
+	PostgresReplicationConfig *PostgresReplicationConfig   `yaml:"postgres_replication,omitempty" minver:"0.7.4"`
+	ClusterCfg                *servercfg.ClusterYAMLConfig `yaml:"cluster,omitempty" minver:"0.17.2"`
 }
 
 var _ servercfg.ServerConfig = (*DoltgresConfig)(nil)
@@ -448,7 +449,10 @@ func (cfg *DoltgresConfig) RemotesapiReadOnly() *bool {
 }
 
 func (cfg *DoltgresConfig) ClusterConfig() servercfg.ClusterConfig {
-	return nil
+	if cfg.ClusterCfg == nil {
+		return nil
+	}
+	return cfg.ClusterCfg
 }
 
 func (cfg *DoltgresConfig) EventSchedulerStatus() string {
