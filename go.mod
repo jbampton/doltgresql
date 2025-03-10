@@ -1,6 +1,6 @@
 module github.com/dolthub/doltgresql
 
-go 1.23.3
+go 1.24.0
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
@@ -167,3 +167,5 @@ require (
 	gopkg.in/go-jose/go-jose.v2 v2.6.3 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/dolthub/dolt/go => ../dolt/go

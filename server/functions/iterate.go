@@ -139,7 +139,10 @@ func IterateDatabase(ctx *sql.Context, database string, callbacks Callbacks) err
 			if err != nil {
 				return err
 			}
-			sequenceMap, _, _ = collection.GetAllSequences()
+			sequenceMap, _, _, err = collection.GetAllSequences(ctx)
+			if err != nil {
+				return err
+			}
 		}
 		if err = iterateSchemas(ctx, callbacks, schemas, sequenceMap); err != nil {
 			return err
@@ -617,7 +620,10 @@ func runSequence(ctx *sql.Context, internalID id.Id, callbacks Callbacks, itemSc
 	if err != nil {
 		return err
 	}
-	sequenceMap, _, _ := collection.GetAllSequences()
+	sequenceMap, _, _, err := collection.GetAllSequences(ctx)
+	if err != nil {
+		return err
+	}
 	sequencesInSchema, ok := sequenceMap[itemSchema.Item.SchemaName()]
 	if !ok {
 		return nil

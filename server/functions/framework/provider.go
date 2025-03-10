@@ -43,7 +43,10 @@ func (fp *FunctionProvider) Function(ctx *sql.Context, name string) (sql.Functio
 		return nil, false
 	}
 	funcName := id.NewFunction("pg_catalog", name)
-	overloads := funcCollection.GetFunctionOverloads(funcName)
+	overloads, err := funcCollection.GetFunctionOverloads(ctx, funcName)
+	if err != nil {
+		return nil, false
+	}
 	if len(overloads) == 0 {
 		return nil, false
 	}
